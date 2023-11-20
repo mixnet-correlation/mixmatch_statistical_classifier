@@ -48,10 +48,34 @@ root@ubuntu2204 $   octave perform_simplified_experiment.m
 
 ## Analytical Experiment on Real Data from Nym
 
-The other main experiment is for real data collected with Nym using a Gaussian net delay characteristic model in the Maximum Likelihood estimator. This data has to be preprocessed. This is done in the python module `real_data_experiment_parser.py` by the function `parse_real_data(databases_path, experiment_database)`. Then, the script `transform_flow_pair_lists.tcsh` has to be invoked, to transform the JSON lists defining the database partition into a list. Then, the experiment can be done by invoking the script `perform_experiment_real_data_alt_delay_characteristic.tcsh`. This script can be edited to modify the `database_id` and the number of chunks, which is the number of parallel octave instances used to perform the experiment. Outputs can then be processed by the Octave script `process_real_data_alt_delay_charactersitic_experiment_results.m` to obtain the full ROC curves. These ROCs can be subsampled by using the script `subsample_TPR_FPR.m`.
+The other main experiment is for real data collected with Nym using a Gaussian net delay characteristic model in the Maximum Likelihood estimator. This data has to be preprocessed. This is done in the python module `real_data_experiment_parser.py` by the function `parse_real_data(databases_path, experiment_database)`. Then, the script `transform_flow_pair_lists.tcsh` has to be invoked, to transform the JSON lists defining the database partition into a list. Then, the experiment can be done by invoking the script `perform_experiment_real_data_alt_delay_characteristic.tcsh`. This script can be edited to modify the `database_id` and the number of chunks, which is the number of parallel octave instances used to perform the experiment. Outputs can then be processed by the Octave script `process_real_data_alt_delay_characteristic_experiment_results.m` to obtain the full ROC curves. These ROCs can be subsampled by using the script `subsample_TPR_FPR.m`.
+
+Run the following commands:
+```bash
+root@ubuntu2204 $   cd ~/mixmatch/mixmatch_statistical_classifier
+root@ubuntu2204 $   tmux
+root@ubuntu2204 $   python real_data_experiment_parser.py
+root@ubuntu2204 $   ./transform_flow_pair_lists.tcsh
+root@ubuntu2204 $   ./perform_experiment_real_data_alt_delay_characteristic.tcsh
+... Takes on the order of days to complete ...
+root@ubuntu2204 $   octave
+octave:1> process_real_data_alt_delay_characteristic_experiment_results("../results", "baseline", 23)
+... Takes some time to complete ...
+octave:1> exit
+```
+
+For the special case of the `two-to-one` experiment, you can replace the step of running `./perform_experiment_real_data_alt_delay_characteristic.tcsh` above with the following two commands:
+```bash
+root@ubuntu2204 $   cd ~/mixmatch/statistical/mixmatch_statistical_classifier
+root@ubuntu2204 $   tmux
+root@ubuntu2204 $   ./perform_experiment_real_data_alt_delay_characteristic_3parties_unmatched_negatives.tcsh
+... Takes on the order of days to complete ...
+root@ubuntu2204 $   ./perform_experiment_real_data_alt_delay_characteristic_3parties_semimatched_negatives.tcsh
+... Takes on the order of days to complete ...
+```
 
 
-## Software requirements
+## Software Requirements
 
 * Python
 * octave

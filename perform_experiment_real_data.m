@@ -2,7 +2,7 @@ average_mixnet_delay = 170e-3;
 time_units = 1e-9;
 
 current_path = pwd();
-database_folder_path = '../datasets/dataset_exp01_nym-binaries-1.0.2_static-http-download_filtered-to-start-end-main';
+database_folder_path = '../datasets/baseline';
 cd(database_folder_path);
 dir_list = dir();
 experiment_folders_cell = {};

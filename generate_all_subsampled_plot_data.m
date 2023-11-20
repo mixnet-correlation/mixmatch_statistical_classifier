@@ -1,9 +1,9 @@
 exp_ids = {};
-exp_ids{1} = 'dataset_exp01_nym-binaries-1.0.2_static-http-download_filtered-to-start-end-main';
-exp_ids{2} = 'dataset_exp02_nym-binaries-1.0.2_static-http-download_no-client-cover-traffic_filtered-to-start-end-main';
-% exp_ids{1} = 'dataset_exp05_nym-binaries-1.0.2_static-http-download_shorter-mix-delay_filtered-to-start-end-main';
-% exp_ids{2} = 'dataset_exp06_nym-binaries-1.0.2_static-http-download_longer-mix-delay_filtered-to-start-end';
-% exp_ids{3} = 'dataset_exp08_nym-binaries-v1.1.13_static-http-download_filtered-to-start-end';
+exp_ids{1} = 'baseline';
+exp_ids{2} = 'no-cover';
+% exp_ids{1} = 'low-delay';
+% exp_ids{2} = 'high-delay';
+% exp_ids{3} = 'live-nym';
 exp_database_dir = '../datasets';
 exp_pieces = {};
 exp_pieces{1} = 20;

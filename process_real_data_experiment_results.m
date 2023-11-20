@@ -1,4 +1,4 @@
-database_folder_path = '../datasets/dataset_exp01_nym-binaries-1.0.2_static-http-download_filtered-to-start-end-main';
+database_folder_path = '../datasets/baseline';
 client_subsets_count = 16;
 max_sequences_length = 1000;
 experiments_count = 4096;

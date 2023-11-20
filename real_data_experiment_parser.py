@@ -2,11 +2,11 @@ import os
 import numpy as np
 import json
 
-# experiment_database = 'dataset_exp02_nym-binaries-1.0.2_static-http-download_no-client-cover-traffic_filtered-to-start-end-main'
-# experiment_database = 'dataset_exp01_nym-binaries-1.0.2_static-http-download_filtered-to-start-end-main'
-# experiment_database = 'dataset_exp08_nym-binaries-v1.1.13_static-http-download_filtered-to-start-end'
+# experiment_database = 'baseline'
+# experiment_database = 'no-cover'
+# experiment_database = 'live-nym'
 
-def parse_real_data(databases_path = '../datasets', experiment_database = 'dataset_exp01_nym-binaries-1.0.2_static-http-download_filtered-to-start-end-main'):
+def parse_real_data(databases_path = '../datasets', experiment_database = 'baseline'):
   experiment_database_path = databases_path + '/' + experiment_database
   experiment_folder_contents = os.listdir(experiment_database_path)
   folders_list = []
