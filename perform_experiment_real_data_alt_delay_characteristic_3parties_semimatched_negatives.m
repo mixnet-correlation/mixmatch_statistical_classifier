@@ -1,4 +1,4 @@
-function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatched_negatives(client_subset_index, client_subsets_count, data_path, database_id)
+function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatched_negatives(client_subset_index, client_subsets_count, data_path, results_path, database_id)
 
 # database_id = 'exp02_nym-binaries-1.0.2_static-http-download_no-client-cover-traffic_filtered-to-start-end-main';
 
@@ -56,7 +56,7 @@ function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatc
 % fprintf(log_handler, 'Number of experiments in test partition: %i\n', length(test_experiment_folders_cell));
   fprintf(1, 'Number of experiments in test partition: %i\n', length(test_experiment_folders_cell));
   test_set_samples_count = length(test_experiment_folders_cell);
-  
+
   cd(database_folder_path);
 
   for experiment_index = 1:length(train_experiment_folders_cell)
@@ -74,7 +74,7 @@ function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatc
 				% fprintf(log_handler, '\n');
   fprintf(1, '\n');
 
-  if 0 % Validation set is not used. Substitute 0 by 1 if used.
+  % if 0 % Validation set is not used. Substitute 0 by 1 if used.
     for experiment_index = 1:length(validation_experiment_folders_cell)
       cd(validation_experiment_folders_cell{experiment_index});
       data_initiator_from_gateway_validation{experiment_index} = load('payload_initiator_from_gateway.txt')*time_units;
@@ -89,7 +89,7 @@ function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatc
     endfor
 				% fprintf(log_handler, '\n');
     fprintf(1, '\n');
-  endif
+  % endif
 
   for experiment_index = 1:length(test_experiment_folders_cell)
     cd(test_experiment_folders_cell{experiment_index});
@@ -182,7 +182,7 @@ function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatc
     fprintf(1, '\nDone.\tAverage delay: %.4f ms; \tStd deviation of delay: %.4f ms\n', 1e3*average_delay, 1e3*std_dev_delay);
   endif
 
-  if 0 % Substitute 0 by 1 if you want to do the experiment on validation set
+  % if 0 % Substitute 0 by 1 if you want to do the experiment on validation set
 % fprintf(log_handler, 'Computing score matrix for validation set...\n'); fflush(1);
     fprintf(1, 'Computing score matrix for validation set...\n'); fflush(1);
 
@@ -249,7 +249,7 @@ function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatc
 				% fprintf(log_handler, '\nDone!\n');
     fprintf(1, '\nDone!\n');
 
-    save('-binary', '-z', [database_folder_path '/real_data_experiment_alt_delay_characteristic_validation_' num2str(client_subset_index) '_of_' num2str(client_subsets_count) '_' database_id '.oct'], ...
+    save('-binary', '-z', [results_path '/' database_id '/real_data_experiment_alt_delay_characteristic_validation_' num2str(client_subset_index) '_of_' num2str(client_subsets_count) '_' database_id '.oct'], ...
 	 'score_matrix_validation', 'data_mean_delay_validation', 'data_min_delay_validation', 'ack_mean_delay_validation', 'ack_min_delay_validation', ...
 	 'train_experiment_folders_cell', 'validation_experiment_folders_cell');
     clear score_matrix_validation;
@@ -264,7 +264,7 @@ function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatc
     clear ack_initiator_from_gateway_validation;
     clear ack_responder_from_gateway_validation;
     clear validation_experiment_folders_cell;
-  endif
+  % endif
 
 % fprintf(log_handler, 'Computing score matrix for test set...\n'); fflush(1);
   fprintf(1, 'Computing score matrix for test set...\n'); fflush(1)
@@ -303,7 +303,7 @@ function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatc
       if server_index >= client_index
 	second_initiator_index = second_initiator_index + 1;
       endif
-      
+
       first_data_transmission_times = sort([data_initiator_to_gateway_test{first_initiator_index}; data_responder_to_gateway_test{first_responder_index}], 'ascend');
       first_data_reception_times = sort([data_initiator_from_gateway_test{first_initiator_index}; data_responder_from_gateway_test{first_responder_index}], 'ascend');
       first_ack_transmission_times = first_data_reception_times;
@@ -324,7 +324,7 @@ function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatc
       merged_aligned_ack_transmission_times = sort([first_aligned_ack_transmission_times; second_aligned_ack_transmission_times], 'ascend');
       merged_aligned_data_reception_times = sort([first_aligned_data_reception_times; second_aligned_data_reception_times], 'ascend');
       merged_aligned_ack_reception_times = sort([first_aligned_ack_reception_times; second_aligned_ack_reception_times], 'ascend');
-      
+
       data_mean_delay_test(mod(client_index - 1, client_block_size) + 1, server_index) = mean(merged_aligned_data_reception_times - merged_aligned_data_transmission_times);
       ack_mean_delay_test(mod(client_index - 1, client_block_size) + 1, server_index) = mean(merged_aligned_ack_reception_times - merged_aligned_ack_transmission_times);
       data_min_delay_test(mod(client_index - 1, client_block_size) + 1, server_index) = min(merged_aligned_data_reception_times - merged_aligned_data_transmission_times);
@@ -346,14 +346,14 @@ function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatc
       fprintf(1, 'Min/Mean ack delay: %7.2f/%7.2f ms; ', ...
 	      1e3*ack_min_delay_test(mod(client_index - 1, client_block_size) + 1, server_index), ...
 	      1e3*ack_mean_delay_test(mod(client_index - 1, client_block_size) + 1, server_index));
-      
+
       if client_index == server_index
 	fprintf(1, ['LLK(%4i) = ' char(27) '[1;49;92m%.2f' char(27) '[0m. \t'], min_length, score_matrix_test(mod(client_index - 1, client_block_size) + 1, server_index, end)); fflush(1);
       else
 	fprintf(1, ['LLK(%4i) = ' char(27) '[0;49;31m%.2f' char(27) '[0m. \t'], min_length, score_matrix_test(mod(client_index - 1, client_block_size) + 1, server_index, end)); fflush(1);
       endif
       fprintf(1, 'Progress: %.6f%%', 100.0*double(mod(client_index - 1, client_block_size)*test_set_samples_count + server_index)/double(test_set_samples_count*client_block_size)); fflush(1);
-      
+
       if client_index == server_index
 			      % fprintf(log_handler, '\n'); fflush(1);
 	fprintf(1, '\n'); fflush(1);
@@ -371,7 +371,7 @@ function perform_experiment_real_data_alt_delay_characteristic_3parties_semimatc
 				% fclose(log_handler);
 
   save('-binary', '-z', ...
-       [database_folder_path '/real_data_experiment_alt_delay_characteristic_test_' ...
+       [results_path '/' database_id '/real_data_experiment_alt_delay_characteristic_test_' ...
 			     num2str(client_subset_index) '_of_' num2str(client_subsets_count) ...
 			     '_' database_id '_3parties_semimatched.oct'], ...
        'score_matrix_test', 'data_mean_delay_test', 'data_min_delay_test', 'ack_mean_delay_test', 'ack_min_delay_test', ...

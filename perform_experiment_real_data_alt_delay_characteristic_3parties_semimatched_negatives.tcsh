@@ -15,7 +15,7 @@ set CURRENT_CHUNK = 1
 while ($CURRENT_CHUNK <= $CHUNKS_COUNT)
     set NEXT_CHUNK = `echo "$CURRENT_CHUNK + 1" | bc`
     echo -n "Launching chunk $NEXT_CHUNK/$CHUNKS_COUNT ... "
-    echo "perform_experiment_real_data_alt_delay_characteristic_3parties_semimatched_negatives($CURRENT_CHUNK, $CHUNKS_COUNT, '$DATABASES_PATH', '$DATABASE_ID');" | octave >& $LOGS_PATH/${DATABASE_ID}_3parties_semimatched_negatives_${CURRENT_CHUNK}_of_${CHUNKS_COUNT}.log &
+    echo "perform_experiment_real_data_alt_delay_characteristic_3parties_semimatched_negatives($CURRENT_CHUNK, $CHUNKS_COUNT, '$DATABASES_PATH', '$MIXCORR_DATA_PATH', '$DATABASE_ID');" | octave >& $LOGS_PATH/${DATABASE_ID}_3parties_semimatched_negatives_${CURRENT_CHUNK}_of_${CHUNKS_COUNT}.log &
     echo "Done."
     set CURRENT_CHUNK = $NEXT_CHUNK
 end

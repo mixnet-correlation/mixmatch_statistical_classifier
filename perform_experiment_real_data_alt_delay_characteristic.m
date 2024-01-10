@@ -1,4 +1,4 @@
-function perform_experiment_real_data_alt_delay_characteristic(client_subset_index, client_subsets_count, data_path, database_id)
+function perform_experiment_real_data_alt_delay_characteristic(client_subset_index, client_subsets_count, data_path, results_path, database_id)
 
 # database_id = 'exp02_nym-binaries-1.0.2_static-http-download_no-client-cover-traffic_filtered-to-start-end-main';
 
@@ -56,7 +56,7 @@ function perform_experiment_real_data_alt_delay_characteristic(client_subset_ind
   % fprintf(log_handler, 'Number of experiments in test partition: %i\n', length(test_experiment_folders_cell));
   fprintf(1, 'Number of experiments in test partition: %i\n', length(test_experiment_folders_cell));
   test_set_samples_count = length(test_experiment_folders_cell);
-  
+
   cd(database_folder_path);
 
   for experiment_index = 1:length(train_experiment_folders_cell)
@@ -74,7 +74,7 @@ function perform_experiment_real_data_alt_delay_characteristic(client_subset_ind
   % fprintf(log_handler, '\n');
   fprintf(1, '\n');
 
-  if 0
+  % if 0
   for experiment_index = 1:length(validation_experiment_folders_cell)
     cd(validation_experiment_folders_cell{experiment_index});
     data_initiator_from_gateway_validation{experiment_index} = load('payload_initiator_from_gateway.txt')*time_units;
@@ -89,7 +89,7 @@ function perform_experiment_real_data_alt_delay_characteristic(client_subset_ind
   endfor
   % fprintf(log_handler, '\n');
   fprintf(1, '\n');
-  endif
+  % endif
 
   for experiment_index = 1:length(test_experiment_folders_cell)
     cd(test_experiment_folders_cell{experiment_index});
@@ -140,7 +140,7 @@ function perform_experiment_real_data_alt_delay_characteristic(client_subset_ind
   fprintf(1, '\nDone.\tAverage delay: %.4f ms; \tStd deviation of delay: %.4f ms\n', 1e3*average_delay, 1e3*std_dev_delay);
 
 
-  if 0 % Comment if you wat to do the experiment on validation set
+  % if 0 % Comment if you wat to do the experiment on validation set
   % fprintf(log_handler, 'Computing score matrix for validation set...\n'); fflush(1);
   fprintf(1, 'Computing score matrix for validation set...\n'); fflush(1);
 
@@ -207,7 +207,7 @@ function perform_experiment_real_data_alt_delay_characteristic(client_subset_ind
   % fprintf(log_handler, '\nDone!\n');
   fprintf(1, '\nDone!\n');
 
-  save('-binary', '-z', [database_folder_path '/real_data_experiment_alt_delay_characteristic_validation_' num2str(client_subset_index) '_of_' num2str(client_subsets_count) '_' database_id '.oct'], ...
+  save('-binary', '-z', [results_path  '/' database_id '/real_data_experiment_alt_delay_characteristic_validation_' num2str(client_subset_index) '_of_' num2str(client_subsets_count) '_' database_id '.oct'], ...
        'score_matrix_validation', 'data_mean_delay_validation', 'data_min_delay_validation', 'ack_mean_delay_validation', 'ack_min_delay_validation', ...
        'train_experiment_folders_cell', 'validation_experiment_folders_cell');
   clear score_matrix_validation;
@@ -222,7 +222,7 @@ function perform_experiment_real_data_alt_delay_characteristic(client_subset_ind
   clear ack_initiator_from_gateway_validation;
   clear ack_responder_from_gateway_validation;
   clear validation_experiment_folders_cell;
-  endif % Comment if you wat to do the experiment on validation set
+  % endif % Comment if you wat to do the experiment on validation set
 
   % fprintf(log_handler, 'Computing score matrix for test set...\n'); fflush(1);
   fprintf(1, 'Computing score matrix for test set...\n'); fflush(1);
@@ -291,7 +291,7 @@ function perform_experiment_real_data_alt_delay_characteristic(client_subset_ind
   fprintf(1, '\nDone!\n');
   % fclose(log_handler);
 
-  save('-binary', '-z', [database_folder_path '/real_data_experiment_alt_delay_characteristic_test_' num2str(client_subset_index) '_of_' num2str(client_subsets_count) '_' database_id '.oct'], ...
+  save('-binary', '-z', [results_path  '/' database_id '/real_data_experiment_alt_delay_characteristic_test_' num2str(client_subset_index) '_of_' num2str(client_subsets_count) '_' database_id '.oct'], ...
        'score_matrix_test', 'data_mean_delay_test', 'data_min_delay_test', 'ack_mean_delay_test', 'ack_min_delay_test', ...
        'train_experiment_folders_cell', 'test_experiment_folders_cell');
 

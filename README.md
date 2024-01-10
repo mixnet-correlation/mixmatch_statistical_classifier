@@ -28,7 +28,7 @@ The file `MIXCORR_DATA_PATH.txt` must contain the desired path to the location o
 The following commands will take care of these requirements:
 ```bash
 root@ubuntu2204 $   mkdir -p ~/mixmatch/{datasets,results}
-root@ubuntu2204 $   mkdir -p ~/mixmatch/results/logs
+root@ubuntu2204 $   mkdir -p ~/mixmatch/results/{logs,baseline,no-cover,low-delay,high-delay,two-to-one,live-nym}
 root@ubuntu2204 $   cd ~/mixmatch/mixmatch_statistical_classifier
 root@ubuntu2204 $   printf "~/mixmatch/results\n" > MIXCORR_DATA_PATH.txt
 root@ubuntu2204 $   printf "~/mixmatch/datasets\n" > DATABASES_PATH.txt
