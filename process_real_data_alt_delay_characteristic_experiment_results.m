@@ -1,5 +1,5 @@
-function process_real_data_alt_delay_characteristic_experiment_results(databases_folder, database_id, client_subsets_count)
-  database_folder_path = [databases_folder '/' database_id];
+function process_real_data_alt_delay_characteristic_experiment_results(results_folder, database_id, client_subsets_count)
+  database_folder_path = [results_folder '/' database_id];
   max_sequences_length = 500;
   lengths_vector = 10:10:max_sequences_length;
   color_codes = ['k','r','g','b','y','m','c'];
@@ -147,7 +147,7 @@ function process_real_data_alt_delay_characteristic_experiment_results(databases
 			    % Pmiss = FNR = 1 - TPR; Pfa = FPR, so...
 	figure(2*set_index);
 	semilogx(Pfa, 1 - Pmiss, ['2' line_color line_style ';Sequences length = ' num2str(sequences_length) ';']);
-	save([databases_folder '/' database_id '_' sets{set_index} '_Pmiss_Pfa_' num2str(sequences_length) '.oct'], 'Pmiss', 'Pfa');
+	save([results_folder '/' database_id '_' sets{set_index} '_Pmiss_Pfa_' num2str(sequences_length) '.oct'], 'Pmiss', 'Pfa');
       endif
     endfor
     fprintf(1, 'Analysing results using full sequences...\n');
@@ -196,7 +196,7 @@ function process_real_data_alt_delay_characteristic_experiment_results(databases
     semilogx(Pfa, 1 - Pmiss, ['2' line_color line_style ';Full sequences;']);
     legend('location', 'eastoutside');
     title('Detection performance of statistical approach using Gaussian delay characteristic');
-    save([databases_folder '/' database_id '_' sets{set_index} '_Pmiss_Pfa_full.oct'], 'Pmiss', 'Pfa');
+    save([results_folder '/' database_id '_' sets{set_index} '_Pmiss_Pfa_full.oct'], 'Pmiss', 'Pfa');
   endfor
 
 endfunction
