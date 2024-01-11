@@ -14,7 +14,12 @@ Please mind that running this artifact requires capable hardware and will take q
 Run the following steps to use this classifier:
 ```bash
 root@ubuntu2204 $   apt-get install --yes octave octave-statistics tcsh tmux
-root@ubuntu2204 $   mkdir -p ~/mixmatch
+root@ubuntu2204 $   mkdir -p ~/mixmatch/octave-packages
+root@ubuntu2204 $   wget 'https://www.nist.gov/document/detwarev2-1-targz' -O ~/mixmatch/octave-packages/detware.tar.gz
+root@ubuntu2204 $   cd ~/mixmatch/octave-packages
+root@ubuntu2204 $   tar xvfz detware.tar.gz && rm -rf detware.tar.gz
+root@ubuntu2204 $   chmod 0755 DETware_v2.1 && chown -R root:root DETware_v2.1 && chmod 0440 DETware_v2.1/*
+root@ubuntu2204 $   printf "  addpath ('/root/mixmatch/octave-packages/DETware_v2.1', '-begin');\n" >> ~/.octaverc
 root@ubuntu2204 $   cd ~/mixmatch
 root@ubuntu2204 $   git clone https://github.com/mixnet-correlation/mixmatch_statistical_classifier.git
 root@ubuntu2204 $   cd mixmatch_statistical_classifier
@@ -57,7 +62,7 @@ root@ubuntu2204 $   tmux
 root@ubuntu2204 $   python real_data_experiment_parser.py
 root@ubuntu2204 $   ./transform_flow_pair_lists.tcsh
 root@ubuntu2204 $   ./perform_experiment_real_data_alt_delay_characteristic.tcsh
-... Takes on the order of days to complete ...
+... Script returns immediately, but launches background tasks that take on the order of days to complete ...
 root@ubuntu2204 $   octave
 octave:1> process_real_data_alt_delay_characteristic_experiment_results("../results", "baseline", 23)
 ... Takes some time to complete ...
@@ -66,12 +71,12 @@ octave:1> exit
 
 For the special case of the `two-to-one` experiment, you can replace the step of running `./perform_experiment_real_data_alt_delay_characteristic.tcsh` above with the following two commands:
 ```bash
-root@ubuntu2204 $   cd ~/mixmatch/statistical/mixmatch_statistical_classifier
+root@ubuntu2204 $   cd ~/mixmatch/mixmatch_statistical_classifier
 root@ubuntu2204 $   tmux
 root@ubuntu2204 $   ./perform_experiment_real_data_alt_delay_characteristic_3parties_unmatched_negatives.tcsh
-... Takes on the order of days to complete ...
+... Script returns immediately, but launches background tasks that take on the order of days to complete ...
 root@ubuntu2204 $   ./perform_experiment_real_data_alt_delay_characteristic_3parties_semimatched_negatives.tcsh
-... Takes on the order of days to complete ...
+... Script returns immediately, but launches background tasks that take on the order of days to complete ...
 ```
 
 
